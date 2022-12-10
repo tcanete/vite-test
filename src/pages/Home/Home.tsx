@@ -2,7 +2,7 @@ import { useQuery } from 'react-query'
 import { apiClient } from '../../services'
 
 function Home() {
-    const { isLoading, error, data, refetch } = useQuery('woof', () => apiClient.get('woouf.json'))
+    const { isLoading, error, data, refetch } = useQuery('woof', () => apiClient.get('woof.json'))
 
     const dataView = () => {
         if (data) {
