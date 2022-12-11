@@ -1,20 +1,29 @@
-import { useQuery } from 'react-query'
-import { apiClient } from '../../services'
+import { useQuery } from '@tanstack/react-query'
+import { woofClient } from '../../services'
 
 function Home() {
-    const { isLoading, error, data, refetch } = useQuery('woof', () => apiClient.get('woof.json'))
+    const { isLoading, error, data, refetch } = useQuery({ queryKey: woofClient.woof.defaultKey, queryFn: () => woofClient.woof.fn() })
+
 
     const dataView = () => {
         if (data) {
-            if (data.data.url.endsWith('mp4')) {
-                return <video width="400" controls autoPlay src={data.data.url} />
+            if (data.url.endsWith('mp4')) {
+                return <video width="400" controls autoPlay src={data.url} />
             }
             else {
-                return <img width="400" src={data.data.url} alt="image" />
+                return <img width="400" src={data.url} alt="image" />
             }
         }
 
         return null;
+    }
+
+    if (isLoading) {
+        return <div>LOADING...</div>
+    }
+
+    if (error) {
+        return <div>ERROR</div>
     }
 
     return (
@@ -24,8 +33,6 @@ function Home() {
             <div>
                 <button onClick={() => refetch()}>New dog!</button>
             </div>
-            {isLoading ? <div>LOADING...</div> : null}
-            {error ? <div>ERROR</div> : null}
             {dataView()}
         </div >
     )

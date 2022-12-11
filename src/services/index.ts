@@ -1,1 +1,1 @@
-export { default as apiClient } from './apiClient'
+export { woofClient } from './woofClient'
